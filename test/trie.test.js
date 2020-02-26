@@ -1,14 +1,9 @@
 const Trie = require('../lib/trie')
 const fc = require('fast-check')
-const { overrideCommands, suffixAddCommands } = require('./trie.commands')
+const { allCommands } = require('./trie.commands')
 
 describe('=== Trie.js ===', () => {
   describe('.empty()', () => {
-    test('must construct a trie', () => {
-      const emptrie = Trie.empty()
-      expect(emptrie).toBeInstanceOf(Trie)
-    })
-
     test('Constructed tries must be diferent', () => {
       const emptrie1 = Trie.empty()
       const emptrie2 = Trie.empty()
@@ -21,26 +16,13 @@ describe('=== Trie.js ===', () => {
     })
   })
 
-  describe('#add', () => {
-    test('override commands', () => {
-      fc.assert(
-        fc.property(
-          fc.commands(overrideCommands()),
-          cmds => {
-            fc.modelRun(overrideCommands.setup, cmds)
-          }
-        )
-      )
-    })
+  describe('model-based', () => {
 
-    test('add trie commands', () => {
+    test('all commands', () => {
       fc.assert(
-        fc.property(
-          fc.commands(suffixAddCommands()),
-          cmds => {
-            fc.modelRun(suffixAddCommands.setup, cmds)
-          }
-        )
+        fc.property(fc.commands(allCommands()), cmds => {
+          fc.modelRun(allCommands.setup, cmds)
+        })
       )
     })
   })

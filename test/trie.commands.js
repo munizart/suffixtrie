@@ -1,48 +1,14 @@
 const fc = require('fast-check')
 const Trie = require('../lib/trie')
 
-function overrideCommands () {
-  const add = {
-    run (model, trie) {
-      model.size = 1
-      model.count++
-      trie.add('$')
-    },
-    check: () => true,
-    toString: () => "add('$')"
-  }
-
-  const size = {
-    run (model, trie) {
-      expect(trie.size).toEqual(model.size)
-    },
-    check: () => true,
-    toString: () => 'size'
-  }
-
-  const count = {
-    run (model, trie) {
-      expect(trie.find('$')[0].count).toEqual(model.count)
-    },
-    check: model => model.size > 0,
-    toString: () => 'find()[0].count'
-  }
-
-  return [add, size, count].map(fc.constant)
-}
-overrideCommands.setup = () => ({
-  real: Trie.empty(),
-  model: { size: 0, count: 0 }
-})
-
-function suffixAddCommands () {
+function allCommands () {
   const add = (/** @type {string} */ suffix) => ({
     run (model, trie) {
       trie.add(suffix)
       model.keys.push(suffix)
       model.keys.sort()
     },
-    check: () => true,
+    check: () => Boolean(suffix.trim()),
     toString: () => `add(${JSON.stringify(suffix)})`
   })
 
@@ -58,6 +24,25 @@ function suffixAddCommands () {
     toString: () => `find(${JSON.stringify(suffix)})`
   })
 
+  const findExact = (/** @type {string} */ suffix) => ({
+    run (model, trie) {
+      const found = trie
+        .findExact(suffix)
+      expect(found && found.data).toEqual(model.keys.find(key => key === suffix))
+    },
+    check: () => true,
+    toString: () => `findExact(${JSON.stringify(suffix)})`
+  })
+
+  const has = (/** @type {string} */ key) => ({
+    run (model, trie) {
+      const found = trie.has(key)
+      expect(found).toEqual(model.keys.includes(key))
+    },
+    check: () => Boolean(key.trim()),
+    toString: () => `has(${JSON.stringify(key)})`
+  })
+
   const size = fc.constant({
     check: () => true,
     toString: () => 'size',
@@ -66,14 +51,14 @@ function suffixAddCommands () {
     }
   })
 
-  return [add, find]
+  return [add, find, findExact, has]
     .map(cmd => fc.string(1, 10).map(s => cmd(s)))
     .concat([size])
 }
 
-suffixAddCommands.setup = () => ({
+allCommands.setup = () => ({
   real: Trie.empty(),
   model: { keys: [] }
 })
-module.exports.overrideCommands = overrideCommands
-module.exports.suffixAddCommands = suffixAddCommands
+
+module.exports.allCommands = allCommands
