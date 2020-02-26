@@ -5,7 +5,10 @@
     "outDir": "dist",
     "lib": [
       "es2018"
-    ]
+    ],
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true
   },
   "include": ["./lib"]
 }

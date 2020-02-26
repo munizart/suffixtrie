@@ -3,10 +3,7 @@
   "version": "1.0.3",
   "main": "/dist/trie.js",
   "files": [
-    "/dist",
-    "/lib",
-    "README.md",
-    "/lib/trie.d.ts"
+    "/dist/**/*"
   ],
   "license": "MIT",
   "author": {
