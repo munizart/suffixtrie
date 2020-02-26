@@ -1,6 +1,6 @@
 {
   "name": "@munizart/suffixtrie",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/trie",
   "license": "MIT",
   "author": {
