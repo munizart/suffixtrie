@@ -1,7 +1,7 @@
 {
   "name": "@munizart/suffixtrie",
   "version": "1.0.5",
-  "main": "/dist/trie",
+  "main": "dist/trie",
   "license": "MIT",
   "author": {
     "name": "Artur Silva Muniz Junior",
