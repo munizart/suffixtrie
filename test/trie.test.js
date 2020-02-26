@@ -1,5 +1,6 @@
 const Trie = require('../lib/trie')
 const fc = require('fast-check')
+const { overrideCommands, suffixAddCommands } = require('./trie.commands')
 
 describe('=== Trie.js ===', () => {
   describe('.empty()', () => {
@@ -16,11 +17,31 @@ describe('=== Trie.js ===', () => {
 
     test('Constructed trie must be empty', () => {
       const emptrie = Trie.empty()
-      expect(emptrie.find('')).toEqual([])
+      expect(emptrie.size).toEqual(0)
     })
   })
 
   describe('#add', () => {
+    test('override commands', () => {
+      fc.assert(
+        fc.property(
+          fc.commands(overrideCommands()),
+          cmds => {
+            fc.modelRun(overrideCommands.setup, cmds)
+          }
+        )
+      )
+    })
 
+    test('add trie commands', () => {
+      fc.assert(
+        fc.property(
+          fc.commands(suffixAddCommands()),
+          cmds => {
+            fc.modelRun(suffixAddCommands.setup, cmds)
+          }
+        )
+      )
+    })
   })
 })
