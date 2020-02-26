@@ -1,9 +1,10 @@
 {
   "name": "@munizart/suffixtrie",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "/dist/trie.js",
   "files": [
     "/dist",
+    "/lib",
     "README.md"
   ],
   "license": "MIT",
@@ -17,7 +18,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint lib/**/*.[jt]s",
     "compile": "tsc -p tsconfig.json",
-    "prepublish": "npm run lint && npm run compile && npm run test"
+    "prepare": "npm run lint && npm run compile && npm run test"
   },
   "description": "",
   "devDependencies": {
@@ -40,5 +41,5 @@
     "prettier-eslint": "^9.0.1",
     "typescript": "^3.8.2"
   },
-  "types": "/dist/trie.d.ts"
+  "types": "/lib/trie.d.ts"
 }
