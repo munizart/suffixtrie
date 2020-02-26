@@ -1,11 +1,12 @@
 {
   "name": "@munizart/suffixtrie",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "/dist/trie.js",
   "files": [
     "/dist",
     "/lib",
-    "README.md"
+    "README.md",
+    "/lib/trie.d.ts"
   ],
   "license": "MIT",
   "author": {
@@ -41,6 +42,5 @@
     "prettier-eslint": "^9.0.1",
     "typescript": "^3.8.2"
   },
-  "types": "/lib/trie.d.ts",
   "keywords": ["trie", "suffix", "suffix trie", "data structure"]
 }
