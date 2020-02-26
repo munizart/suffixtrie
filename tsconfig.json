@@ -4,9 +4,9 @@
     "noEmit": false,
     "outDir": "dist",
     "lib": [
-      "es2018"
+      "es2018",
+      "ESNext.Array"
     ],
-    "target": "es5",
     "module": "commonjs",
     "strict": true
   },

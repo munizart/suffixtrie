@@ -7,17 +7,16 @@ interface State {
 
 const vault = new WeakMap<object, State>()
 
-function entries (obj) {
+function keys<T> (obj: T): (keyof T)[] {
   return (
     Object.getOwnPropertySymbols(obj)
       // @ts-ignore
       .concat(Object.getOwnPropertyNames(obj))
-      .map(k => [k, obj[k]])
   )
 }
 
-function uncons (listable) {
-  const list = Array.isArray(listable) ? listable : [...listable]
+function uncons (listable: string | string[]): [string[], string] {
+  const list = Array.isArray(listable) ? listable : Array.from(listable)
   return [list.slice(0, -1), list[list.length - 1]]
 }
 
@@ -34,7 +33,7 @@ class Trie {
     if (typeof suffix !== 'string' || !suffix) {
       throw TypeError('first argument must be a non-empty string')
     }
-    let state = vault.get(this)
+    let state = vault.get(this)!
     let sux = Array.from(suffix)
     while (sux[0]) {
       let last
@@ -57,7 +56,7 @@ class Trie {
       throw TypeError('first argument must be a non-empty string')
     }
     let [rest, key] = uncons(suffix)
-    let pointer = vault.get(this)
+    let pointer = vault.get(this)!
     do {
       pointer = pointer[key]
       ;[rest, key] = uncons(rest)
@@ -70,7 +69,7 @@ class Trie {
       throw TypeError('first argument must be a non-empty string')
     }
     let [init, key] = uncons(k)
-    let pointer = vault.get(this)
+    let pointer = vault.get(this)!
     do {
       pointer = pointer[key]
       ;[init, key] = uncons(init)
@@ -90,7 +89,7 @@ class Trie {
       throw TypeError('first argument must be a non-empty string')
     }
     let [init, k] = uncons(key)
-    let pointer = vault.get(this)
+    let pointer = vault.get(this)!
     let done = false
     do {
       pointer = pointer[k]
@@ -102,16 +101,16 @@ class Trie {
   }
 }
 
-function expand (node: State) {
-  return ((node &&
-    entries(node).flatMap(([k, v]) => {
+function expand (node: State): string[] {
+  if (node) {
+    return keys(node).flatMap(k => {
       if (k === terminal) {
-        return [v as string]
-      } else {
-        return expand(v as State)
+        return node[k] || []
       }
-    })) ||
-    []) as string[]
+      return expand(node[k])
+    })
+  }
+  return []
 }
 const empty = Trie.empty
 export { empty }

@@ -16,7 +16,8 @@
     "test:watch": "jest --watch",
     "lint": "eslint lib/**/*.[jt]s",
     "compile": "tsc -p tsconfig.json",
-    "prepare": "npm run lint && npm run compile && npm run test"
+    "prepare": "npm run compile",
+    "prepublishOnly": "npm run lint && npm run test"
   },
   "description": "",
   "devDependencies": {
