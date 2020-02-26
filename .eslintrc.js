@@ -1,4 +1,5 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     commonjs: true,
@@ -6,16 +7,10 @@ module.exports = {
     node: true,
     jest: true
   },
-  extends: [
-    'standard'
-  ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
-  parserOptions: {
-    ecmaVersion: 2018
-  },
+  plugins: ['@typescript-eslint'],
+  extends: ['standard', 'plugin:@typescript-eslint/eslint-recommended'],
   rules: {
+    'no-undef': 'off',
+    'no-unused-vars': 'off'
   }
 }

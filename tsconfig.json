@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "checkJs": true,
     "declaration": true,
     "noEmit": false,
     "outDir": "dist",
-    "downlevelIteration": true,
     "lib": [
       "es2018"
     ]
