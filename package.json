@@ -3,11 +3,7 @@
   "version": "1.0.6",
   "main": "dist/trie",
   "license": "MIT",
-  "author": {
-    "name": "Artur Silva Muniz Junior",
-    "email": "arturmunizjr+opensource@gmail.com",
-    "url": "https://muniz.art.br"
-  },
+  "author": "munizart",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
